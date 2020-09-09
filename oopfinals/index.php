@@ -3,9 +3,8 @@
 require_once 'classes/connect.php';
 require_once 'classes/model.php';
 
-
-//$obj = new model();
-$obj = new connection();
+$obj = new model();
+//$obj = new connection();
 
 if(isset($_POST['submit'])){
     $name=$_POST['name'];
@@ -16,7 +15,7 @@ if(isset($_POST['update'])){
     $name=$_POST['name'];
     $email=$_POST['email'];
      $editid=$_POST['hid'];
-    $obj->UpdateRecord($name,$email);
+    $obj->UpdateRecord($name,$email,$editid);
 }//if isset close
 if(isset($_GET['deleteid'])){
     $delid=$_GET['deleteid'];
