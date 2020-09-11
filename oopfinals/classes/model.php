@@ -15,7 +15,34 @@ public function DisplayRecord(){
                     return $data;
             }//if close
         }//function close
-        
+
+
+
+        public function DisplayRecordbySearch($s){
+            if(!empty($s)){
+            $sql="SELECT * from student Where name = '$s' AND email = 's' ";
+            $result = $this->conn->query($sql);
+            if($result->num_rows>0){
+                while($row=$result->fetch_assoc()){
+                    $data[]=$row;
+                }
+
+                    return $data;
+            }//if close
+        }//function close
+    
+    else{
+            $sql="SELECT * from student ";
+            $result = $this->conn->query($sql);
+            if($result->num_rows>0){
+                while($row=$result->fetch_assoc()){
+                    $data[]=$row;
+                }
+
+                    return $data;
+            }//if close
+        }//function close
+        }
         public function DisplayRecordById($editid){
 
             $sql="SELECT * from student where id='$editid' ";
@@ -25,6 +52,10 @@ public function DisplayRecord(){
                 return $row;
             }
         }
+
+        
+
+
         public function InsertRecord($name,$email){
 
             $sql= "INSERT INTO `student`(`name`, `email`) VALUES ('$name','$email')";
