@@ -54,17 +54,57 @@ if(isset($_GET['deleteid'])){
     }
 
     ?> 
-<br>
-    <h4 class="text-center text-danger">Display Records</h4>
- 
+
+        <?php
+            if(isset($_GET['editid'])){
+            $editid=$_GET['editid'];
+            $myrecord=$obj->DisplayRecordById($editid);
+           
+        ?>
+             <form action="index.php" method="post">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" value="<?php echo $myrecord['name'];?>" placeholder="Enter Your Name" class="form-control" required="">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" name="email" value="<?php echo $myrecord['email'];?>" placeholder="Enter Your E-mail" class="form-control" required="">
+            </div>
+            <div class="form-group">
+             <input type="hidden" name="hid"  value="<?php echo $myrecord['id'];?>">
+                <input type="submit" name="update" value="Update " class="btn btn-info">
+            </div>
+
+    </form><br>
+
+        <?php
+        }else{
+        ?>
+    <form action="index.php" method="post">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Enter Your Name" class="form-control" required="">
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" name="email" placeholder="Enter Your E-mail" class="form-control" required="">
+        </div>
+        <div class="form-group">
+         
+            <input type="submit" name="submit" value="submit " class="btn btn-info">
+        </div></form>
+    <?php }//else close ?>
    
+           
+        
+             <br>
+    <h4 class="text-center text-danger">Display Records</h4>
+  
     <form action="index.php" method="get">
          <input type="text" name="search" placeholder="search" >
          <button type="submit" name="search" value="search "  class="btn btn-danger">Search</button>
          </form> 
- <form action="add.php">
-        <button type="submit" name="search" value="search "  class="btn btn-danger">ADD Student</button>
-         </form> 
+
          <?php 
       
          if(isset($_GET['search'])){
@@ -81,15 +121,16 @@ if(isset($_GET['deleteid'])){
         <th>Action</th>
         </tr>
         <?php 
-       $data=$obj->DisplayRecord();
-      
+       $data=$obj->DisplayRecordbySearch($s);
+       var_dump($data);
+
        $sno=1;
         foreach ($data as $value) { ?>
            <tr class="text-center">
                <td><?php echo $sno++; ?></td>
                <td><?php echo $value['name']; ?></td>
                <td><?php echo $value['email']; ?></td>
-               <td><a href="edit.php?editid=<?php echo $value['id']; ?>" class="btn btn-info">EDIT</a>
+               <td><a href="index.php?editid=<?php echo $value['id']; ?>" class="btn btn-info">EDIT</a>
                 <a href="index.php?deleteid=<?php echo $value['id']; ?>" class="btn btn-danger">DELETE</a>
                 </td>
             </tr><?php }//foreach close?>
