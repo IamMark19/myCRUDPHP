@@ -64,11 +64,11 @@ if(isset($_GET['deleteid'])){
              <form action="index.php" method="post">
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" name="name" value="<?php echo $myrecord['name'];?>" placeholder="Enter Your Name" class="form-control">
+                <input type="text" name="name" value="<?php echo $myrecord['name'];?>" placeholder="Enter Your Name" class="form-control" required="">
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input type="text" name="email" value="<?php echo $myrecord['email'];?>" placeholder="Enter Your E-mail" class="form-control">
+                <input type="text" name="email" value="<?php echo $myrecord['email'];?>" placeholder="Enter Your E-mail" class="form-control" required="">
             </div>
             <div class="form-group">
              <input type="hidden" name="hid"  value="<?php echo $myrecord['id'];?>">
@@ -83,22 +83,37 @@ if(isset($_GET['deleteid'])){
     <form action="index.php" method="post">
         <div class="form-group">
             <label>Name</label>
-            <input type="text" name="name" placeholder="Enter Your Name" class="form-control">
+            <input type="text" name="name" placeholder="Enter Your Name" class="form-control" required="">
         </div>
         <div class="form-group">
             <label>Email</label>
-            <input type="text" name="email" placeholder="Enter Your E-mail" class="form-control">
+            <input type="text" name="email" placeholder="Enter Your E-mail" class="form-control" required="">
         </div>
         <div class="form-group">
          
             <input type="submit" name="submit" value="submit " class="btn btn-info">
-        </div>
-
-    </form>
+        </div></form>
     <?php }//else close ?>
-    <br>
+   
+           
+        
+             <br>
     <h4 class="text-center text-danger">Display Records</h4>
-    <table class="table table-bordered">
+  
+    <form action="index.php" method="get">
+         <input type="text" name="search" placeholder="search" >
+         <button type="submit" name="search" value="search "  class="btn btn-danger">Search</button>
+         </form> 
+
+         <?php 
+      
+         if(isset($_GET['search'])){
+            $s=$_GET['search'];
+           else{
+                $obj= new model(); }?>
+                
+
+    <table class="table table-bordered"> 
         <tr class="bg-primary text-center">
         <th>S.No</th>
         <th>Name</th>
@@ -106,10 +121,11 @@ if(isset($_GET['deleteid'])){
         <th>Action</th>
         </tr>
         <?php 
-        $data=$obj->DisplayRecord();
-        $sno=1;
-        foreach ($data as $value) {
-           ?>
+       $data=$obj->DisplayRecordbySearch($s);
+       var_dump($data);
+
+       $sno=1;
+        foreach ($data as $value) { ?>
            <tr class="text-center">
                <td><?php echo $sno++; ?></td>
                <td><?php echo $value['name']; ?></td>
@@ -117,14 +133,15 @@ if(isset($_GET['deleteid'])){
                <td><a href="index.php?editid=<?php echo $value['id']; ?>" class="btn btn-info">EDIT</a>
                 <a href="index.php?deleteid=<?php echo $value['id']; ?>" class="btn btn-danger">DELETE</a>
                 </td>
-              
-               
-           </tr>
+            </tr><?php }//foreach close?>
+   </table>
+<?php } 
 
-        <?php  
-        }//foreach close
-        ?>
-    </table>
+ ?>
+
+
+
+  
 </div>
 </div>
  </body> 
