@@ -58,19 +58,28 @@ if(isset($_GET['deleteid'])){
     <h4 class="text-center text-danger">Display Records</h4>
  
    
-    <form action="index.php" method="get">
-         <input type="text" name="search" placeholder="search" >
-         <button type="submit" name="search" value="search "  class="btn btn-danger">Search</button>
+    <form action="index.php" method="GET">
+         <input type="text" name="search" value="<?php echo $_GET['search'] ?>" placeholder="search" >
+         <button type="submit" name="btn-search" value="search" class="btn btn-danger">Search</button>
          </form> 
- <form action="add.php">
-        <button type="submit" name="search" value="search "  class="btn btn-danger">ADD Student</button>
-         </form> 
-         <?php 
-      
-         if(isset($_GET['search'])){
-            $s=$_GET['search'];
-           }else{
-                $obj= new model(); }?>
+       <a class="btn btn-danger" href="add.php">Add Student</a>
+        <?php 
+            $data = []; //Storage of student;
+            $obj= new model();  // Object
+
+            //search button dapt ung iveverify, ichecheck kung ngsearch ba si user
+            if(isset($_GET['btn-search']))
+            {
+                $s=$_GET['search'];
+                $data = $obj->DisplayRecordbySearch($s);
+            }
+            else
+            {
+                $data = $obj->DisplayRecordbySearch();
+            }
+
+            //var_dump($data);
+        ?>
                 
 
     <table class="table table-bordered"> 
@@ -80,19 +89,27 @@ if(isset($_GET['deleteid'])){
         <th>Email</th>
         <th>Action</th>
         </tr>
-        <?php 
-       $data=$obj->DisplayRecord();
-      
+        <?php       
        $sno=1;
-        foreach ($data as $value) { ?>
-           <tr class="text-center">
-               <td><?php echo $sno++; ?></td>
-               <td><?php echo $value['name']; ?></td>
-               <td><?php echo $value['email']; ?></td>
-               <td><a href="edit.php?editid=<?php echo $value['id']; ?>" class="btn btn-info">EDIT</a>
-                <a href="index.php?deleteid=<?php echo $value['id']; ?>" class="btn btn-danger">DELETE</a>
-                </td>
-            </tr><?php }//foreach close?>
+       if(count($data))
+       {
+            foreach ($data as $value) 
+            { ?>
+                <tr class="text-center">
+                    <td><?php echo $sno++; ?></td>
+                    <td><?php echo $value['name']; ?></td>
+                    <td><?php echo $value['email']; ?></td>
+                    <td><a href="edit.php?editid=<?php echo $value['id']; ?>" class="btn btn-info">EDIT</a>
+                    <a href="index.php?deleteid=<?php echo $value['id']; ?>" class="btn btn-danger">DELETE</a>
+                    </td>
+                </tr>
+                <?php 
+            }
+       }
+       else{
+           echo '<tr><td colspan="4">No Records Found</td></tr>';
+       }
+       ?>
    </table>
 
 

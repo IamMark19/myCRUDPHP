@@ -17,8 +17,8 @@ public function DisplayRecord(){
         }//function close
 
 
-
-        public function DisplayRecordbySearch($s){
+        //$s = null ay para optional ung paglalagay ng $s parameter
+        public function DisplayRecordbySearch($s = null){
             if(!empty($s)){
             $sql="SELECT * from student Where name = '$s' AND email = 's' ";
             $result = $this->conn->query($sql);
