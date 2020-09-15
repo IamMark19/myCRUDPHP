@@ -30,7 +30,7 @@ if(isset($_GET['deleteid'])){
  <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Basic Crud</title>
+     <title>Basic Crud using mysql</title>
      <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
      <script type="text/javascript" src="bootstrap/js/bootstap.js"></script>
 
